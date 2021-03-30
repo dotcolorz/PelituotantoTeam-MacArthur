@@ -19,7 +19,7 @@ public class PlayerHit : MonoBehaviour
                 break;
             case "Spikes":
                 PlayerDeath();
-                Debug.Log("You have stepped on spikes.");
+                Debug.Log("You have stepped on spikes. You are dead :(");
                 break;
             default:
                 break;

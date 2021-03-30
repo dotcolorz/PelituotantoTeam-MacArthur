@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
 
     void PrintInstruction()
     {
-        Debug.Log("Welcome to Team MacArthur's game. Use WASD or arrow keys to control your character.");  
+        Debug.Log("Welcome to Team MacArthur's game. Use WASD or arrow keys to control your character. Rotate by using Q and E. Hit enemies with your Bo-Pole, don't touch enemies or spikes.");  
     }
 
     //WASD ja nuolinäppäin liikkuminen
@@ -37,14 +37,14 @@ public class PlayerMovement : MonoBehaviour
     }
     
 
-    //Sivuttain kääntyminen
+    //Sivuttain kääntyminen hiiren näppäimillä
     void ProcessRotation()
     {
-        if (Input.GetKey(KeyCode.E))
+        if (Input.GetKey(KeyCode.Mouse1))
         {
             ApplyRotation(rotateSpeed);
         }
-        else if (Input.GetKey(KeyCode.Q))
+        else if (Input.GetKey(KeyCode.Mouse0))
         {
             ApplyRotation(-rotateSpeed);
         }
