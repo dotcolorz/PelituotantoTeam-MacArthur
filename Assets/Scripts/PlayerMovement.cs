@@ -1,57 +1,54 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PlayerMovement : MonoBehaviour
 {
-    //Liikkumisnopeus arvoja
-    [SerializeField] float moveSpeed = 10f;
-    [SerializeField] float rotateSpeed = 10f;
-    Rigidbody rb;
+    NavMeshAgent playerAgent;
+    
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        playerAgent = GetComponent<NavMeshAgent>();
         PrintInstruction();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        PlayerMove();
-        ProcessRotation();
+        //jos hiiren vasenta klikki‰ painetaan ja hiiri ei ole pelinsis‰isen gameobjectin p‰‰ll‰ kutsutaan "GetInteraction"
+        if (Input.GetMouseButtonDown(0) && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+            GetInteraction();
+        
     }
+
+    void GetInteraction()
+    {
+        Ray interactionRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit interactionInfo;
+        if (Physics.Raycast(interactionRay, out interactionInfo, Mathf.Infinity))
+        {
+            GameObject interactedObject = interactionInfo.collider.gameObject;
+            if(interactedObject.tag == "Interactable Object")
+            {
+                interactedObject.GetComponent<Interactable>().MoveToInteraction(playerAgent);
+            }
+            else
+            {
+                playerAgent.destination = interactionInfo.point;
+            }
+        }
+    }
+   
 
     void PrintInstruction()
     {
-        Debug.Log("Welcome to Team MacArthur's game. Use WASD or arrow keys to control your character. Rotate by using Q and E. Hit enemies with your Bo-Pole, don't touch enemies or spikes.");  
+        Debug.Log("Welcome to Team MacArthur's game.");  
     }
 
-    //WASD ja nuolin√§pp√§in liikkuminen
-    void PlayerMove()
-    {
-        float xValue = Input.GetAxis("Horizontal")*Time.deltaTime *moveSpeed;
-        float zValue = Input.GetAxis("Vertical")*Time.deltaTime *moveSpeed;
-
-        transform.Translate(xValue,0,zValue);
-    }
+    
     
 
-    //Sivuttain k√§√§ntyminen hiiren n√§pp√§imill√§
-    void ProcessRotation()
-    {
-        if (Input.GetKey(KeyCode.Mouse1))
-        {
-            ApplyRotation(rotateSpeed);
-        }
-        else if (Input.GetKey(KeyCode.Mouse0))
-        {
-            ApplyRotation(-rotateSpeed);
-        }
-    }
-    void ApplyRotation(float rotationThisFrame)
-    {
-        transform.Rotate(Vector3.up * rotationThisFrame * Time.deltaTime);
-    }
+   
 
 }
