@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class NewBehaviourScript : Interactable
+public class PickupItem : Interactable
 {
     public override void Interact()
     {

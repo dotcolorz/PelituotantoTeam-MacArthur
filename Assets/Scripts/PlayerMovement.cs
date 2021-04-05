@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        //jos hiiren vasenta klikki‰ painetaan ja hiiri ei ole pelinsis‰isen gameobjectin p‰‰ll‰ kutsutaan "GetInteraction"
+        //jos hiiren vasenta klikkiÅEpainetaan ja hiiri ei ole pelinsis‰isen gameobjectin p‰‰llÅEkutsutaan "GetInteraction"
         if (Input.GetMouseButtonDown(0) && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
             GetInteraction();
         
@@ -36,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
             else
             {
                 playerAgent.destination = interactionInfo.point;
+                playerAgent.stoppingDistance = 0;
             }
         }
     }
